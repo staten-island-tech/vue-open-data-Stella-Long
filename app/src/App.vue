@@ -1,11 +1,25 @@
-<script setup></script>
+<script setup>
+import { onMounted, ref } from 'vue'
+const data = ref([])
+
+onMounted(async () => {
+  try {
+    const response = await fetch('https://data.cityofnewyork.us/resource/kun8-kdsr.json')
+    
+    if (!response.ok) {
+      
+    }
+    data.value = await response.json()
+  } catch (err) {
+    console.log(err)
+  }
+})
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div v-for="item in data" :key="item.id">
+    {{ item }}    
+  </div>
 </template>
 
 <style scoped></style>
